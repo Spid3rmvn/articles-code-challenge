@@ -22,10 +22,10 @@ def show_examples():
     print("mag = Magazine('My Magazine', 'Technology')")
     print("mag.save()")
     
-    print("\n# Write an article:")
+    print("\n# Add an article:")
     print("author = Author('Jane Doe')")
     print("mag = Magazine('Tech Today', 'Technology')")
-    print("article = author.write_article(mag, 'The Future of AI')")
+    print("article = author.add_article(mag.id, 'The Future of AI')")
     
     print("\n# Get all articles by an author:")
     print("author = Author('Jane Doe')")
@@ -60,9 +60,9 @@ def main():
     mag2 = Magazine("Health Today", "Health")
     print(f"Created magazines: {mag1.name}, {mag2.name}")
     
-    article1 = author1.write_article(mag1, "AI in 2025")
-    article2 = author1.write_article(mag2, "Healthy Living Tips")
-    article3 = author2.write_article(mag1, "Cybersecurity Essentials")
+    article1 = author1.add_article(mag1.id, "AI in 2025")
+    article2 = author1.add_article(mag2.id, "Healthy Living Tips")
+    article3 = author2.add_article(mag1.id, "Cybersecurity Essentials")
     print(f"Created articles: '{article1.title}', '{article2.title}', '{article3.title}'")
     
     show_examples()
