@@ -4,6 +4,12 @@ Simple debug file to test your models and database
 Run with: python lib/debug.py
 """
 
+import sys
+import os
+
+# Add the parent directory to the Python path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from lib.models.author import Author
 from lib.models.magazine import Magazine
 from lib.models.article import Article
@@ -24,17 +30,19 @@ def show_examples():
     
     print("\n# Add an article:")
     print("author = Author('Jane Doe')")
+    print("author.save()")
     print("mag = Magazine('Tech Today', 'Technology')")
+    print("mag.save()")
     print("article = author.add_article(mag.id, 'The Future of AI')")
     
     print("\n# Get all articles by an author:")
-    print("author = Author('Jane Doe')")
+    print("author = Author.find_by_name('Jane Doe')")
     print("articles = author.articles()")
     print("for article in articles:")
     print("    print(f'{article.title} in {article.magazine.name}')")
     
     print("\n# Get all magazines an author contributed to:")
-    print("author = Author('Jane Doe')")
+    print("author = Author.find_by_name('Jane Doe')")
     print("magazines = author.magazines()")
     print("for mag in magazines:")
     print("    print(mag.name)")
@@ -49,21 +57,7 @@ def help():
 def main():
     print("=== Article Database Debug Console ===")
     print("\nThis is an interactive tool to test your database and models.")
-    
-    # Create some sample data for demonstration
-    print("\n=== Creating Sample Data ===")
-    author1 = Author("Alice")
-    author2 = Author("Bob")
-    print(f"Created authors: {author1.name}, {author2.name}")
-    
-    mag1 = Magazine("Tech Monthly", "Technology")
-    mag2 = Magazine("Health Today", "Health")
-    print(f"Created magazines: {mag1.name}, {mag2.name}")
-    
-    article1 = author1.add_article(mag1.id, "AI in 2025")
-    article2 = author1.add_article(mag2.id, "Healthy Living Tips")
-    article3 = author2.add_article(mag1.id, "Cybersecurity Essentials")
-    print(f"Created articles: '{article1.title}', '{article2.title}', '{article3.title}'")
+    print("\nFirst, make sure you've created the database.")
     
     show_examples()
     

@@ -75,14 +75,15 @@ class Author:
 
     def add_article(self, magazine_id, title):
         """Create a new article for this author"""
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO articles (title, author_id, magazine_id) 
-            VALUES (?, ?, ?)
-        """, (title, self.id, magazine_id))
-        conn.commit()
-        conn.close()
+        # Import Article here to avoid circular import
+        from lib.models.article import Article
+        
+        # Create the article object
+        article = Article(title, self.id, magazine_id)
+        article.save()
+        
+        # Return the created article
+        return article
 
     def topic_areas(self):
         """Get unique categories of magazines the author has written for"""
