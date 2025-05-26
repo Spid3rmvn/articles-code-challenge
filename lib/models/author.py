@@ -48,6 +48,28 @@ class Author:
             return cls(row['name'], row['id'])
         return None
 
+    @classmethod
+    def all(cls):
+        """Get all authors from the database"""
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM authors")
+        authors = []
+        for row in cursor.fetchall():
+            authors.append(cls(row['name'], row['id']))
+        conn.close()
+        return authors
+
+    @classmethod
+    def count(cls):
+        """Get the total number of authors"""
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM authors")
+        count = cursor.fetchone()[0]
+        conn.close()
+        return count
+
     def articles(self):
         """Get all articles written by this author"""
         conn = get_connection()
