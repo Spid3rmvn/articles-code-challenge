@@ -2,64 +2,20 @@
 
 A simple project to manage Authors, Articles, and Magazines using Python and SQLite.
 
-## Quick Start Guide
+## Project Overview
 
-### Step 1: Set Up Your Environment
-
-First, make sure you have Python installed. Then:
-
-```bash
-# Install pipenv if you don't have it
-pip install pipenv
-
-# Install project dependencies
-pipenv install
-
-# Activate the virtual environment
-pipenv shell
-```
-
-### Step 2: Create the Database
-
-Run this command to create your database:
-
-```bash
-python scripts/setup_db.py
-```
-
-This creates an `articles.db` file with three tables:
-- **authors** - Stores author information
-- **magazines** - Stores magazine information  
-- **articles** - Connects authors and magazines
-
-### Step 3: Add Sample Data
-
-Run this to add some test data:
-
-```bash
-python lib/db/seed.py
-```
-
-### Step 4: Try It Out!
-
-Run the example queries:
-
-```bash
-python scripts/run_queries.py
-```
-
-Or play with the debug console:
-
-```bash
-python lib/debug.py
-```
+This project implements a database system for tracking articles, authors, and magazines. It uses SQLite for data storage and provides Python models for interacting with the database.
 
 ## Project Structure
 
 ```
 articles-code-challenge/
 ├── lib/                    # Main code folder
-│   ├── models/            # Database models (Author, Article, Magazine)
+│   ├── models/            # Database models
+│   │   ├── __init__.py    # Package initialization
+│   │   ├── article.py     # Article model
+│   │   ├── author.py      # Author model
+│   │   └── magazine.py    # Magazine model
 │   ├── db/                # Database files
 │   │   ├── connection.py  # Database connection
 │   │   ├── schema.sql     # Table definitions
@@ -68,61 +24,74 @@ articles-code-challenge/
 ├── scripts/               # Helper scripts
 │   ├── setup_db.py        # Creates the database
 │   └── run_queries.py     # Example queries
-└── test/                  # Test files (for later)
+└── test/                  # Test files
+    ├── __init__.py        # Test package initialization
+    ├── test_article.py    # Article tests
+    ├── test_author.py     # Author tests
+    └── test_magazine.py   # Magazine tests
 ```
 
-## How to Use
+## Setup Instructions
 
-### Creating Records
+1. Create a virtual environment:
+```bash
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
+```
 
+2. Install required packages:
+```bash
+pip install pytest
+```
+
+3. Set up the database:
+```bash
+python scripts/setup_db.py
+```
+
+4. Add sample data (optional):
+```bash
+python lib/db/seed.py
+```
+
+## Running Tests
+
+Run tests using pytest:
+```bash
+python -m pytest test/
+```
+
+## Using the Application
+
+You can use the interactive debug console to experiment with the models:
+```bash
+python lib/debug.py
+```
+
+Example operations:
 ```python
-# Create an author
-author = Author("Your Name")
+# Create a new author
+author = Author("John Doe")
 author.save()
 
 # Create a magazine
-magazine = Magazine("Tech Today", "Technology")
+magazine = Magazine("Tech Weekly", "Technology")
 magazine.save()
 
 # Create an article
-article = Article("My First Article", author.id, magazine.id)
+article = Article("Python Tips", author.id, magazine.id)
 article.save()
 ```
 
-### Finding Records
+## Current Status
 
-```python
-# Find by ID
-author = Author.find_by_id(1)
+- Basic models implemented (Author, Article, Magazine)
+- Database schema created
+- Test files set up
+- Interactive debugging console available
 
-# Find by name
-magazine = Magazine.find_by_name("Tech Today")
-```
+## Next Steps
 
-### Getting Related Data
-
-```python
-# Get all articles by an author
-articles = author.articles()
-
-# Get all magazines an author wrote for
-magazines = author.magazines()
-
-# Get all articles in a magazine
-articles = magazine.articles()
-```
-
-## Tips for Beginners
-
-1. **Start Small**: Try creating one author, one magazine, and one article first
-2. **Use the Debug Console**: Run `python lib/debug.py` to experiment
-3. **Check Your Database**: The `articles.db` file contains all your data
-4. **Read the Error Messages**: They often tell you exactly what's wrong
-
-## Common Issues
-
-- **"No such table" error**: Run `python scripts/setup_db.py` first
-- **"No data found"**: Run `python lib/db/seed.py` to add sample data
-- **Import errors**: Make sure you're in the project folder and activated pipenv
-
-Happy coding! 🚀
+- Implement additional query methods
+- Add more comprehensive tests
+- Create a user interface
